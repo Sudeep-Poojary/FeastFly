@@ -83,6 +83,48 @@ const resList = [
     },
     subtype: "basic",
   },
+  {
+    type: "restaurant",
+    data: {
+      id: "3",
+      name: "Domino's Pizza",
+      restaurantImageId:
+        "2024/11/29/87b297a1-0dac-477e-8bb5-98c7e57b08da_24525.jpg",
+      cuisines: ["Pizzas", "Italian", "Pastas", "Desserts"],
+      costForTwo: 400,
+      deliveryTime: 20,
+      avgRating: "4.0",
+    },
+    subtype: "basic",
+  },
+  {
+    type: "restaurant",
+    data: {
+      id: "4",
+      name: "Burger King",
+      restaurantImageId:
+        "2024/6/11/7f76a072-c1bc-4d74-ac56-33e0eea20c1e_15168.JPG",
+      cuisines: ["Burgers", "American"],
+      costForTwo: 400,
+      deliveryTime: 20,
+      avgRating: "4.3",
+    },
+    subtype: "basic",
+  },
+  {
+    type: "restaurant",
+    data: {
+      id: "5",
+      name: "Theobroma",
+      restaurantImageId:
+        "2025/1/2/10309c79-99ef-4bba-87cf-33262d0cf56b_378292.jpg",
+      cuisines: ["Bakery", "Desserts"],
+      costForTwo: 400,
+      deliveryTime: 20,
+      avgRating: "4.7",
+    },
+    subtype: "basic",
+  },
 ];
 
 const Body = () => {
@@ -91,8 +133,12 @@ const Body = () => {
       <div className="search">Search</div>
 
       <div className="res-container">
-        <RestaurantCard resData={resList[0]} />
-        <RestaurantCard resData={resList[1]} />
+        {/* Using .map() function to loop through the array of restaurants.
+    Always make use of key, it is very important and also use a unique key and not index */}
+
+        {resList.map((restaurant) => (
+          <RestaurantCard key={restaurant.data.id} resData={restaurant} />
+        ))}
       </div>
     </div>
   );
