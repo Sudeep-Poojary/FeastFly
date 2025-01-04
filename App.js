@@ -24,22 +24,66 @@ const Header = () => {
 };
 
 const RestaurantCard = (props) => {
-  const { resName, cuisine } = props;
+  const { resData } = props;
+
+  const {
+    restaurantImageId,
+    name,
+    cuisines,
+    costForTwo,
+    avgRating,
+    deliveryTime,
+  } = resData?.data;
 
   return (
     <div className="res-card">
       <img
         className="res-logo"
         alt="res-logo"
-        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/12/5/dc74a4b7-8d63-4eb7-91c9-048973c2cc99_1003414.jpg"
+        src={
+          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/" +
+          restaurantImageId
+        }
       />
-      <h3>{resName}</h3>
-      <h4>{cuisine}</h4>
-      <h4>3.2 Stars</h4>
-      <h4>55 Minutes</h4>
+      <h3>{name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>₹{costForTwo} For Two</h4>
+      <h4>{avgRating} Stars</h4>
+      <h4>{deliveryTime} Minutes</h4>
     </div>
   );
 };
+
+const resList = [
+  {
+    type: "restaurant",
+    data: {
+      id: "1",
+      name: "KFC",
+      restaurantImageId:
+        "2024/12/9/ba126942-5212-440a-8978-c641a61dbe54_418298.JPG",
+      cuisines: ["Burgers", "Fast Food", "Rolls & Wraps"],
+      costForTwo: 400,
+      deliveryTime: 20,
+      avgRating: "4.4",
+    },
+    subtype: "basic",
+  },
+  {
+    type: "restaurant",
+    data: {
+      id: "2",
+      name: "McDonald's",
+      restaurantImageId:
+        "2024/9/18/bf1777b6-1023-479b-b191-5c6cd3e9bdc0_30243.jpg",
+      cuisines: ["Burgers", "Beverage", "Cafe", "Desserts"],
+      costForTwo: 400,
+      deliveryTime: 20,
+      avgRating: "4.5",
+    },
+    subtype: "basic",
+  },
+];
 
 const Body = () => {
   return (
@@ -47,8 +91,8 @@ const Body = () => {
       <div className="search">Search</div>
 
       <div className="res-container">
-        <RestaurantCard resName="Pizza Hut" cuisine="Pizza, Garlic Bread" />
-        <RestaurantCard resName="KFC" cuisine="Fired Chicken, Burger" />
+        <RestaurantCard resData={resList[0]} />
+        <RestaurantCard resData={resList[1]} />
       </div>
     </div>
   );
