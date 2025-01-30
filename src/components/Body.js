@@ -7,6 +7,8 @@ const Body = () => {
   // const [listOfRestaurants, setListOfRestaurants] = useState(resList); //Using mockData
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
 
+  const [searchText, setSearchText] = useState("");
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -30,8 +32,21 @@ const Body = () => {
     <div className="body">
       <div className="filter">
         <div className="search">
-          <input type="text" className="search-box" />
-          <button>Search</button>
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              console.log(searchText);
+            }}
+          >
+            Search
+          </button>
         </div>
 
         <button
