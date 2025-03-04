@@ -52,7 +52,7 @@ const Body = () => {
             }}
           />
           <button
-            className="px-4 py-2 m-4 bg-green-100 rounded-lg"
+            className="px-4 py-2 mx-1 my-4 bg-green-100 rounded-lg"
             onClick={() => {
               console.log(searchText);
 
