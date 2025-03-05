@@ -7,7 +7,7 @@ const RestaurantCard = (props) => {
     resData?.info;
 
   return (
-    <div className="p-4 m-4 w-[250px] bg-gray-100 rounded-lg">
+    <div className="p-4 m-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-300">
       <img
         className="rounded-lg"
         alt="res-logo"
@@ -16,7 +16,7 @@ const RestaurantCard = (props) => {
       <h3 className="font-bold py-4 text-lg">{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
       <h4>{costForTwo}</h4>
-      <h4>{avgRating} ⭐</h4>
+      <h4>{avgRating}⭐</h4>
       <h4>{sla?.slaString}</h4>
     </div>
   );
