@@ -15,7 +15,7 @@ const RestaurantCard = (props) => {
       />
       <h3 className="font-bold pt-4 pb-2 text-lg">{name}</h3>
       <h4 className="pb-2 text-md">
-        ⭐ {avgRating} ● {sla?.slaString}
+        ⭐ {avgRating} • {sla?.slaString}
       </h4>
       <h4 className="pb-2 text-sm text-gray-600">{cuisines.join(", ")}</h4>
       <h4 className="font-bold pb-2 text-sm">{costForTwo}</h4>
