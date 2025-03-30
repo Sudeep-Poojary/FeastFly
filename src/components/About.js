@@ -1,6 +1,7 @@
 import User from "./User";
 import UserClass from "./UserClass";
 import React from "react";
+import UserContext from "../utils/UserContext";
 
 class About extends React.Component {
   constructor(props) {
@@ -19,6 +20,13 @@ class About extends React.Component {
       <div>
         <h1>About Us</h1>
         <h2>This is FeastFly</h2>
+
+        {/* Made use of context below in Class Based Component (CBC) as Hooks don't work in CBC */}
+        <UserContext.Consumer>
+          {({ loggedInUser }) => (
+            <h1 className="text-xl font-bold">LoggedIn User: {loggedInUser}</h1>
+          )}
+        </UserContext.Consumer>
         <UserClass name={"First"} location={"Mumbai"} />
       </div>
     );
