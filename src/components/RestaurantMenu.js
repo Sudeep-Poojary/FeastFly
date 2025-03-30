@@ -42,6 +42,7 @@ const RestaurantMenu = () => {
           data={category?.card?.card}
           showItems={index === showIndex ? true : false}
           setShowIndex={() => setShowIndex(index)}
+          setShowIndexClose={() => setShowIndex(null)}
         />
       ))}
     </div>
