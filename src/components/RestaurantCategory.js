@@ -1,8 +1,17 @@
 import ItemList from "./ItemList";
 
-const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
+const RestaurantCategory = ({
+  data,
+  showItems,
+  setShowIndex,
+  setShowIndexClose,
+}) => {
   const handleClick = () => {
-    setShowIndex();
+    if (showItems === true) {
+      setShowIndexClose();
+    } else {
+      setShowIndex();
+    }
   };
 
   return (
