@@ -5,6 +5,9 @@
 - HTML, CSS, JavaScript
 - React.js
 - Parcel
+- Tailwind CSS
+- React API
+- Redux ToolKit
 
 ## Installation 💻
 
