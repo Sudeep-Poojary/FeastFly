@@ -6,8 +6,8 @@
 - React.js
 - Parcel
 - Tailwind CSS
-- React API
-- Redux ToolKit
+- Context API
+- Redux Toolkit
 
 ## Installation 💻
 
