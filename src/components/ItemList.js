@@ -5,9 +5,9 @@ import { CDN_URL } from "../utils/constants";
 const ItemList = ({ items }) => {
   const dispatch = useDispatch();
 
-  const handleAddItem = () => {
+  const handleAddItem = (item) => {
     // Dispatch an action
-    dispatch(addItem("Pizza"));
+    dispatch(addItem(item));
   };
 
   return (
@@ -34,7 +34,7 @@ const ItemList = ({ items }) => {
             <div className="absolute">
               <button
                 className="px-8 py-2 mx-6 my-35 bg-white text-green-600 font-bold shadow-lg rounded-lg"
-                onClick={handleAddItem}
+                onClick={() => handleAddItem(item)}
               >
                 ADD
               </button>
