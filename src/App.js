@@ -36,7 +36,7 @@ const AppLayout = () => {
 
   return (
     <Provider store={appStore}>
-      // Change the value of default context value
+      {/* Change the value of default context value */}
       <UserContext.Provider value={{ loggedInUser: userName }}>
         <div className="app">
           <Header />
