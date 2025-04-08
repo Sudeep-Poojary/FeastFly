@@ -17,7 +17,7 @@ const Cart = () => {
       <div className="flex justify-between w-6/12 m-auto">
         <h1 className="mx-4 text-4xl font-bold">Cart</h1>
         <button
-          className="mx-6 py-3 px-4 bg-red-400 text-white rounded-lg"
+          className="mx-6 py-3 px-4 bg-red-600 text-white rounded-lg"
           onClick={handleClearCart}
         >
           Clear Cart
