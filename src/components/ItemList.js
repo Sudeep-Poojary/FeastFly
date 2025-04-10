@@ -33,7 +33,7 @@ const ItemList = ({ items }) => {
           <div className="w-3/12 p-4">
             <div className="absolute">
               <button
-                className="px-8 py-2 mx-6 my-35 bg-white text-green-600 font-bold shadow-lg rounded-lg"
+                className="px-8 py-2 mx-6 my-35 bg-white text-green-600 hover:bg-green-600 hover:text-white font-bold shadow-lg rounded-lg"
                 onClick={() => handleAddItem(item)}
               >
                 ADD
