@@ -17,9 +17,9 @@ class About extends React.Component {
     // console.log("Parent Render");
 
     return (
-      <div>
-        <h1>About Us</h1>
-        <h2>This is FeastFly</h2>
+      <div className="m-5 p-5 content-center justify-items-center">
+        <h1 className="text-2xl font-bold ">About Us</h1>
+        <h2 className="my-4 text-xl font-bold">This is FeastFly</h2>
 
         {/* Made use of context below in Class Based Component (CBC) as Hooks don't work in CBC */}
         <UserContext.Consumer>
