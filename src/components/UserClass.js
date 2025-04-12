@@ -42,11 +42,16 @@ class UserClass extends React.Component {
     // console.log(this.props.name + "Child Render");
 
     return (
-      <div className="user-card">
-        <img src={avatar_url} />
-        <h2>Name: {name}</h2>
-        <h3>Location: {location}</h3>
-        <h4>Contact: @Sudeep-Poojary</h4>
+      <div className="m-4 p-4 content-center justify-items-center">
+        <div className="justify-items-center p-10 bg-gray-200 rounded-2xl">
+          <img src={avatar_url} className="rounded-2xl w-50 mb-10" />
+
+          <div className="my-2">
+            <h2>Name: {name}</h2>
+            <h3>Location: {location}</h3>
+            <h4>Contact: @Sudeep-Poojary</h4>
+          </div>
+        </div>
       </div>
     );
   }
