@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Sudeep-Poojary/FeastFly#readme",
   "devDependencies": {
+    "@testing-library/react": "^16.3.0",
     "parcel": "^2.11.0",
     "process": "^0.11.10"
   },
