@@ -10,3 +10,30 @@ test("Should load contact us component", () => {
   // Assertion
   expect(heading).toBeInTheDocument();
 });
+
+test("Should load button inside the contact us component", () => {
+  render(<Contact />);
+
+  const button = screen.getByRole("button");
+
+  expect(button).toBeInTheDocument();
+});
+
+test("Should load input name inside the coontact us component", () => {
+  render(<Contact />);
+
+  const inputName = screen.getByPlaceholderText("name");
+
+  expect(inputName).toBeInTheDocument();
+});
+
+test("Should load 2 input boxes on the contact us component", () => {
+  render(<Contact />);
+
+  const inputBoxes = screen.getAllByRole("textbox");
+
+  console.log(inputBoxes.length);
+
+  //Assertion
+  expect(inputBoxes.length).toBe(2);
+});
