@@ -4,11 +4,13 @@ import "@testing-library/jest-dom";
 
 describe("Contact Us Page Test Cases", () => {
   it("Should load contact us component", () => {
+    // 1. Render
     render(<Contact />);
 
+    // 2. Query
     const heading = screen.getByRole("heading");
 
-    // Assertion
+    // 3. Assertion
     expect(heading).toBeInTheDocument();
   });
 
@@ -17,7 +19,6 @@ describe("Contact Us Page Test Cases", () => {
 
     const button = screen.getByRole("button");
 
-    //Assertion
     expect(button).toBeInTheDocument();
   });
 
@@ -26,7 +27,6 @@ describe("Contact Us Page Test Cases", () => {
 
     const inputName = screen.getByPlaceholderText("name");
 
-    //Assertion
     expect(inputName).toBeInTheDocument();
   });
 
@@ -35,9 +35,8 @@ describe("Contact Us Page Test Cases", () => {
 
     const inputBoxes = screen.getAllByRole("textbox");
 
-    console.log(inputBoxes.length);
+    // console.log(inputBoxes.length);
 
-    //Assertion
     expect(inputBoxes.length).toBe(2);
   });
 });
