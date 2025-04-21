@@ -1,9 +1,9 @@
 import { LOGO_URL } from "../utils/constants";
 import { useState, useContext } from "react";
-import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
@@ -15,7 +15,7 @@ const Header = () => {
 
   // Subscribing to our store using a selector
   const cartItems = useSelector((store) => store.cart.items);
-  console.log(cartItems);
+  // console.log(cartItems);
 
   return (
     <div className="flex justify-between shadow-lg bg-orange-500">
