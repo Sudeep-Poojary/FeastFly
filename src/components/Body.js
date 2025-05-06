@@ -87,13 +87,13 @@ const Body = () => {
       <div className="flex flex-wrap">
         {filteredRestaurant.map((restaurant) => (
           <Link
-            key={restaurant.info.id}
-            to={"/restaurants/" + restaurant.info.id}
+            key={restaurant?.info.id}
+            to={"/restaurants/" + restaurant?.info.id}
           >
-            {restaurant.info.isOpen ? (
-              <RestaurantCardPromoted resData={restaurant} />
+            {restaurant?.info.isOpen ? (
+              <RestaurantCardPromoted resData={restaurant?.info} />
             ) : (
-              <RestaurantCard resData={restaurant} />
+              <RestaurantCard resData={restaurant?.info} />
             )}
           </Link>
         ))}
