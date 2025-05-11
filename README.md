@@ -8,6 +8,8 @@
 - Tailwind CSS
 - Context API
 - Redux Toolkit
+- React Testing Library
+- Jest
 
 ## Installation 💻
 
