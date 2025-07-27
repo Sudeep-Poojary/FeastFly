@@ -23,5 +23,15 @@ it("Should render the Body Component with Search Button", async () => {
 
   const seacrhBtn = screen.getByRole("button", { name: "Search" });
 
-  expect(seacrhBtn).toBeInTheDocument();
+  const searchInput = screen.getByTestId("searchInput");
+
+  fireEvent.change(searchInput, { target: { value: "burger" } });
+
+  fireEvent.click(seacrhBtn);
+
+  // screen should load 1 res card
+
+  const cards = screen.getAllByTestId("resCard");
+
+  expect(cards.length).toBe(1);
 });
