@@ -43,7 +43,7 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter flex">
+      <div className="filter flex justify-center">
         <div className="search m-4 p-4">
           <input
             type="text"
@@ -85,7 +85,7 @@ const Body = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-evenly">
         {filteredRestaurant.map((restaurant) => (
           <Link
             key={restaurant?.info.id}
