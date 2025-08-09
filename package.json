@@ -4,7 +4,6 @@
   "description": "FeastFly by Sudeep Poojary",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html",
     "test": "jest",
     "watch-test": "jest --watch"
   },
