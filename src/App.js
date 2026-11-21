@@ -1,8 +1,14 @@
 import { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  ScrollRestoration,
+} from "react-router";
 import { Provider } from "react-redux";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Body from "./components/Body";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -17,10 +23,14 @@ const Grocery = lazy(() => import("./components/Grocery"));
 const AppLayout = () => {
   return (
     <Provider store={appStore}>
-      <div className="app">
+      <div className="flex min-h-screen flex-col">
         <Header />
-        <Outlet />
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4">
+          <Outlet />
+        </main>
+        <Footer />
       </div>
+      <ScrollRestoration />
     </Provider>
   );
 };

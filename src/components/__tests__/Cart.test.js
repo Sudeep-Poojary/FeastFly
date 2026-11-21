@@ -51,7 +51,7 @@ it("Should load the Restaurant Menu and open an accordion", async () => {
 it("Should start with an empty cart", async () => {
   await renderMenuPage();
 
-  expect(screen.getByText("Cart - (0 items)")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 0 items" })).toBeInTheDocument();
 });
 
 it("Should add food items to the cart", async () => {
@@ -59,10 +59,10 @@ it("Should add food items to the cart", async () => {
 
   const addBtns = screen.getAllByRole("button", { name: "ADD" });
   fireEvent.click(addBtns[0]);
-  expect(screen.getByText("Cart - (1 items)")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 1 item" })).toBeInTheDocument();
 
   fireEvent.click(addBtns[1]);
-  expect(screen.getByText("Cart - (2 items)")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 2 items" })).toBeInTheDocument();
 });
 
 it("Should show the added items in the Cart", async () => {
@@ -78,5 +78,5 @@ it("Should clear the Cart", async () => {
 
   expect(screen.queryAllByTestId("cartItems").length).toBe(0);
   expect(screen.getByText("Your Cart is Empty!!!")).toBeInTheDocument();
-  expect(screen.getByText("Cart - (0 items)")).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 0 items" })).toBeInTheDocument();
 });

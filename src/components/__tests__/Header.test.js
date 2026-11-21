@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Header from "../Header";
 import { BrowserRouter } from "react-router";
 import { Provider } from "react-redux";
-import appStore from "../../utils/appStore";
 import "@testing-library/jest-dom";
+import Header from "../Header";
+import appStore from "../../utils/appStore";
 
-it("Should render Header Component with a login button", () => {
+const renderHeader = () =>
   render(
     <BrowserRouter>
       <Provider store={appStore}>
@@ -14,53 +14,44 @@ it("Should render Header Component with a login button", () => {
     </BrowserRouter>
   );
 
-  const loginButton = screen.getByRole("button", { name: "Login" });
+it("Should render the FeastFly logo linking home", () => {
+  renderHeader();
 
-  expect(loginButton).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "FeastFly home" })).toHaveAttribute("href", "/");
 });
 
-it("Should render Header Component with Cart Items 0", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={appStore}>
-        <Header />
-      </Provider>
-    </BrowserRouter>
-  );
+it("Should render the main nav links", () => {
+  renderHeader();
 
-  const cartItems = screen.getByText("Cart - (0 items)");
-
-  expect(cartItems).toBeInTheDocument();
+  for (const name of ["Grocery", "About", "Help"]) {
+    expect(screen.getByRole("link", { name })).toBeInTheDocument();
+  }
 });
 
-it("Should render Header Component with Carts", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={appStore}>
-        <Header />
-      </Provider>
-    </BrowserRouter>
-  );
+it("Should render the cart with 0 items", () => {
+  renderHeader();
 
-  const cart = screen.getByText(/Cart/);
-
-  expect(cart).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 0 items" })).toBeInTheDocument();
+  expect(screen.getByTestId("cartCount")).toHaveTextContent("0");
 });
 
-it("Should render Login button to Logout on click", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={appStore}>
-        <Header />
-      </Provider>
-    </BrowserRouter>
-  );
+it("Should toggle Sign In to the user's name on click", () => {
+  renderHeader();
 
-  const loginButton = screen.getByRole("button", { name: "Login" });
+  fireEvent.click(screen.getByRole("button", { name: "Sign In" }));
 
-  fireEvent.click(loginButton);
+  expect(screen.getByRole("button", { name: "Guest" })).toBeInTheDocument();
+});
 
-  const logoutButton = screen.getByRole("button", { name: "Logout" });
+it("Should open and close the mobile menu", () => {
+  renderHeader();
 
-  expect(logoutButton).toBeInTheDocument();
+  const toggle = screen.getByRole("button", { name: "Open menu" });
+  expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  fireEvent.click(toggle);
+  expect(screen.getByRole("navigation", { name: "Mobile" })).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: "Close menu" }));
+  expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
 });
