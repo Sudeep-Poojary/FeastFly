@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import { CartIcon } from "../ui/Icons";
 import { selectCartCount, selectSubtotal } from "../../utils/cartSlice";
+import { formatRupees } from "../../utils/bill";
 
 // Sticky bottom bar shown while the cart has items.
 const ViewCartBar = () => {
@@ -18,7 +19,7 @@ const ViewCartBar = () => {
         className="flex items-center justify-between rounded-2xl bg-rating px-5 py-4 font-bold text-white shadow-lg transition-colors hover:brightness-95"
       >
         <span>
-          {count} {count === 1 ? "item" : "items"} added · ₹{subtotal}
+          {count} {count === 1 ? "item" : "items"} added · {formatRupees(subtotal)}
         </span>
         <span className="flex items-center gap-2 uppercase">
           View cart

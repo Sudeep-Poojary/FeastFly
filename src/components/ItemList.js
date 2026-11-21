@@ -2,6 +2,7 @@ import FoodImage from "./FoodImage";
 import VegIcon from "./ui/VegIcon";
 import AddToCartButton from "./menu/AddToCartButton";
 import { itemPrice } from "../utils/cartSlice";
+import { formatRupees } from "../utils/bill";
 
 const MenuItem = ({ item, restaurant }) => (
   <li
@@ -16,7 +17,7 @@ const MenuItem = ({ item, restaurant }) => (
         )}
       </div>
       <h4 className="mt-1 text-lg font-bold text-ink">{item.name}</h4>
-      <p className="font-semibold text-ink">₹{itemPrice(item)}</p>
+      <p className="font-semibold text-ink">{formatRupees(itemPrice(item))}</p>
       {item.description && (
         <p className="mt-2 line-clamp-2 text-sm text-ink-muted">{item.description}</p>
       )}

@@ -4,7 +4,9 @@ import {
   clearCart,
   decrementItem,
   removeItem,
+  replaceCart,
   selectCartCount,
+  selectIsOtherRestaurant,
   selectCartRestaurant,
   selectItemQty,
   selectSubtotal,
@@ -92,4 +94,30 @@ it("clears everything", () => {
   store.dispatch(clearCart());
 
   expect(state().cart).toEqual({ restaurant: null, items: [] });
+});
+
+it("keeps one restaurant per cart: ignores items from another restaurant", () => {
+  const { store, state } = setup();
+  const burgerHub = { id: "234567", name: "Burger Hub", areaName: "Bandra West" };
+
+  store.dispatch(addItem({ item: pizza, restaurant }));
+  expect(selectIsOtherRestaurant(burgerHub)(state())).toBe(true);
+  expect(selectIsOtherRestaurant(restaurant)(state())).toBe(false);
+
+  store.dispatch(addItem({ item: { id: "b1", name: "Burger", price: 9900 }, restaurant: burgerHub }));
+  expect(state().cart.items).toEqual([{ info: pizza, qty: 1 }]);
+});
+
+it("replaces the cart with an item from a new restaurant", () => {
+  const { store, state } = setup();
+  const burger = { id: "b1", name: "Burger", price: 9900 };
+  const burgerHub = { id: 234567, name: "Burger Hub", areaName: "Bandra West", other: 1 };
+
+  store.dispatch(addItem({ item: pizza, restaurant }));
+  store.dispatch(replaceCart({ item: burger, restaurant: burgerHub }));
+
+  expect(state().cart).toEqual({
+    restaurant: { id: "234567", name: "Burger Hub", areaName: "Bandra West" },
+    items: [{ info: burger, qty: 1 }],
+  });
 });
