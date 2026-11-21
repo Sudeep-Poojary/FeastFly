@@ -31,8 +31,12 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
   - `getRestaurants()` / `getRestaurantMenu(id)` try the live API with a timeout. On any failure (network, Cloudflare `403`, CORS, timeout, unexpected shape) they fall back to the bundled dataset. They return `{ data, source: "live" | "local" }`.
   - `extractRestaurants` / `extractMenu` find sections **by shape, never by array index**. The grid is the card with `gridElements.infoWithStyle.restaurants`. Restaurant info is the card with `info.name`. Categories are `REGULAR.cards` entries with an `itemCards` array, accepting any `@type`; nested `categories` are flattened.
   - Components receive **normalized plain objects**: restaurant `info` objects, and a menu of `{ info, categories: [{ title, items: [itemInfo] }] }`. They never see `card.card...`.
-- **Hooks:** `useRestaurantList()` and `useRestaurantMenu(resId)` return `{ ..., loading, error }`. Components show `Shimmer` while loading and an error message on failure.
-- **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/FoodImage.js` renders an emoji-on-gradient placeholder chosen from the dish or cuisine name.
+- **Pagination:** the API returns only 10 restaurants and has no pagination. After that first page, `getMoreRestaurants(offset)` serves further pages from the local-only catalogue in `src/data/moreRestaurants.js` (30 restaurants with menus generated from cuisine `TEMPLATES`), with a simulated delay (`LOCAL_PAGE_DELAY_MS`, 0 in tests). `buildMenuResponse(id)` covers both catalogues.
+- **Hooks:**
+  - `useRestaurantList()` returns `{ restaurants, firstPage, loading, error, hasMore, loadingMore, loadMoreError, loadMore }`. It de-duplicates by `id`, and `loadMore` ignores calls while a page is in flight. The home carousels use `firstPage`, so they don't shift as more pages load.
+  - `useInfiniteScroll(loadMore, { enabled })` returns a ref for a sentinel element, backed by `IntersectionObserver`. It is a no-op in jsdom, so tests mock `IntersectionObserver` (see `InfiniteScroll.test.js`). A "Show more restaurants" button is the manual fallback.
+  - `useRestaurantMenu(resId)` returns `{ menu, loading, error }`.
+- **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/FoodImage.js` renders an emoji-on-gradient placeholder. `getFoodVisual(name, hints)` checks the name first and then the hints, and the first matching pattern in `VISUALS` wins, so pattern order matters.
 - Prices are in paise. Show `(price ?? defaultPrice) / 100`.
 - **Home filtering** is pure logic in `utils/restaurantFilters.js` (`applyFilters`, `FILTERS`, `SORTS`, `getTopCuisines`). `Body.js` only holds the filter state, so add new chips or sorts there, not in components.
 

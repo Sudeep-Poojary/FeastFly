@@ -6,6 +6,8 @@
 // `cloudinaryImageId` / `imageId` are dummy ids, as in the API: the UI renders
 // generated placeholder art instead of loading them.
 
+import { MORE_RESTAURANTS, buildMoreMenu } from "./moreRestaurants";
+
 const item = (id, name, category, description, price, isVeg, extra = {}) => ({
   card: {
     info: {
@@ -451,9 +453,23 @@ export const buildListResponse = () => ({
   },
 });
 
+// Local-only "next pages" after the API's first page. Mirrors a typical
+// cursor API: returns a slice plus the offset to ask for next (null = end).
+export const getMoreRestaurantsPage = (offset = 0, limit = 8) => {
+  const restaurants = MORE_RESTAURANTS.slice(offset, offset + limit);
+  const next = offset + restaurants.length;
+  return {
+    restaurants,
+    nextOffset: next < MORE_RESTAURANTS.length ? next : null,
+  };
+};
+
 export const buildMenuResponse = (resId) => {
-  const info = RESTAURANTS.find((r) => r.id === String(resId));
+  const id = String(resId);
+  const info =
+    RESTAURANTS.find((r) => r.id === id) ?? MORE_RESTAURANTS.find((r) => r.id === id);
   if (!info) return { success: false, message: "Restaurant menu not found" };
+  const categories = MENUS[id] ?? buildMoreMenu(id) ?? [];
 
   return {
     status: true,
@@ -470,7 +486,7 @@ export const buildMenuResponse = (resId) => {
               REGULAR: {
                 cards: [
                   {},
-                  ...(MENUS[info.id] || []).map((category) => ({
+                  ...categories.map((category) => ({
                     card: { card: { "@type": CATEGORY_TYPE, ...category } },
                   })),
                 ],

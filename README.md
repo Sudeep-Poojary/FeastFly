@@ -46,6 +46,8 @@ Restaurant and menu data comes from the [NamasteDev dummy API](https://namastede
 
 If the API can't be reached (offline, blocked, or too slow), the app uses a bundled copy of the same dataset (`src/data/restaurants.js`), so it always has something to show.
 
+The API returns 10 restaurants and has no pagination. To demo infinite scroll, the home page loads further pages from 30 extra restaurants that exist only in `src/data/moreRestaurants.js`.
+
 ## Deploy to Vercel 🚀
 
 The repo includes a `vercel.json`, so it deploys as-is:

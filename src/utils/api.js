@@ -1,5 +1,15 @@
-import { LIST_RESTAURANTS_URL, MENU_URL, API_TIMEOUT_MS } from "./constants";
-import { buildListResponse, buildMenuResponse } from "../data/restaurants";
+import {
+  LIST_RESTAURANTS_URL,
+  MENU_URL,
+  API_TIMEOUT_MS,
+  PAGE_SIZE,
+  LOCAL_PAGE_DELAY_MS,
+} from "./constants";
+import {
+  buildListResponse,
+  buildMenuResponse,
+  getMoreRestaurantsPage,
+} from "../data/restaurants";
 
 // ---------------------------------------------------------------------------
 // Parsing — locate sections by their shape, never by array index, so the app
@@ -89,4 +99,12 @@ export const getRestaurants = () =>
 export const getRestaurantMenu = (resId) =>
   withFallback(MENU_URL + encodeURIComponent(resId), extractMenu, () =>
     buildMenuResponse(resId)
+  );
+
+// Next page of restaurants after the first (API) page. The API has no
+// pagination, so these come from the extended local catalogue.
+// Resolves to { restaurants, nextOffset } — nextOffset is null at the end.
+export const getMoreRestaurants = (offset = 0, limit = PAGE_SIZE) =>
+  new Promise((resolve) =>
+    setTimeout(() => resolve(getMoreRestaurantsPage(offset, limit)), LOCAL_PAGE_DELAY_MS)
   );
