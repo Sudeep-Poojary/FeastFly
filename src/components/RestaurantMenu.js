@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import { filterMenu } from "../utils/menuFilters";
+import useDocumentTitle from "../utils/useDocumentTitle";
 import RestaurantCategory from "./RestaurantCategory";
 import MenuHeader from "./menu/MenuHeader";
 import DealsCarousel from "./menu/DealsCarousel";
@@ -34,6 +35,7 @@ const VegToggle = ({ checked, onChange }) => (
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const { menu, loading, error } = useRestaurantMenu(resId);
+  useDocumentTitle(menu?.info?.name ?? (loading ? "Loading menu" : "Restaurant not found"));
 
   // One category open at a time; the first one starts open.
   const [openIndex, setOpenIndex] = useState(0);

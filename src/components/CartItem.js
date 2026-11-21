@@ -11,14 +11,14 @@ const CartItem = ({ line, restaurant }) => {
   const { info, qty } = line;
 
   return (
-    <li data-testid="cartItems" className="flex items-center gap-3 py-3">
+    <li data-testid="cartItems" className="flex items-center gap-2 py-3 sm:gap-3">
       <VegIcon isVeg={info.isVeg === 1} className="size-3.5" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-ink">{info.name}</p>
+        <p className="line-clamp-2 text-sm font-semibold text-ink">{info.name}</p>
         <p className="text-xs text-ink-subtle">{formatRupees(itemPrice(info))} each</p>
       </div>
       <AddToCartButton item={info} restaurant={restaurant} size="sm" />
-      <p className="w-16 text-right text-sm font-semibold text-ink" data-testid="lineTotal">
+      <p className="w-14 text-right text-sm font-semibold text-ink sm:w-16" data-testid="lineTotal">
         {formatRupees(itemPrice(info) * qty)}
       </p>
       <button

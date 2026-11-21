@@ -1,12 +1,14 @@
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 import Logo from "./ui/Logo";
 import Button from "./ui/Button";
+import useDocumentTitle from "../utils/useDocumentTitle";
 
 // Rendered by the router outside AppLayout (no header/footer), so it carries
 // its own minimal branding.
 const Error = () => {
   const err = useRouteError();
   const notFound = isRouteErrorResponse(err) && err.status === 404;
+  useDocumentTitle(notFound ? "Page not found" : "Something went wrong");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">

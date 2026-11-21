@@ -7,6 +7,9 @@
 # Parcel Cache directory
 .parcel-cache
 
+# Dev server output (kept apart from production dist/)
+/.dev-dist
+
 # Testing directory
 /coverage
 # Vercel

@@ -7,6 +7,7 @@ import {
   selectSubtotal,
 } from "../utils/cartSlice";
 import { computeBill, formatRupees } from "../utils/bill";
+import useDocumentTitle from "../utils/useDocumentTitle";
 import CartItem from "./CartItem";
 import BillDetails from "./cart/BillDetails";
 import FoodImage from "./FoodImage";
@@ -29,18 +30,19 @@ const EmptyCart = () => (
 const RupeeIcon = () => <span aria-hidden="true">₹</span>;
 
 const Step = ({ icon: Icon, title, children }) => (
-  <section className="relative rounded-2xl bg-white p-6 shadow-card">
+  <section className="relative rounded-2xl bg-white p-4 shadow-card sm:p-6">
     <div className="flex items-center gap-3">
       <span className="grid size-10 place-items-center rounded-xl bg-ink text-white">
         <Icon className="size-5" />
       </span>
       <h2 className="text-lg font-extrabold text-ink">{title}</h2>
     </div>
-    <div className="mt-4 pl-13">{children}</div>
+    <div className="mt-4 sm:pl-13">{children}</div>
   </section>
 );
 
 const Cart = () => {
+  useDocumentTitle("Cart");
   const dispatch = useDispatch();
   const items = useSelector(selectCartItems);
   const restaurant = useSelector(selectCartRestaurant);
@@ -70,7 +72,7 @@ const Cart = () => {
         </div>
 
         {/* Order summary */}
-        <aside className="h-fit rounded-2xl bg-white p-6 shadow-card lg:sticky lg:top-24">
+        <aside className="h-fit rounded-2xl bg-white p-4 shadow-card sm:p-6 lg:sticky lg:top-24">
           {restaurant && (
             <Link
               to={`/restaurants/${restaurant.id}`}

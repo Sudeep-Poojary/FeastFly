@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm start`: Parcel dev server at <http://localhost:1234>. The entry is `index.html`, which loads `src/App.js`.
+- `npm start`: Parcel dev server at <http://localhost:1234>. The entry is `index.html`, which loads `src/App.js`. It writes to `.dev-dist/`, kept separate from the production `dist/`. If the browser shows "Cannot find module" after edits, hard-refresh; if that doesn't fix it, stop the server, delete `.parcel-cache`, and restart.
 - `npm run build`: production build into `dist/`. This is what Vercel runs (see `vercel.json`).
 - `npm test`: runs all Jest tests. Coverage is on by default via `jest.config.js` and written to `coverage/`.
 - `npx jest src/components/__tests__/Cart.test.js`: runs one test file.
@@ -40,6 +40,11 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 - **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/FoodImage.js` renders an emoji-on-gradient placeholder. `getFoodVisual(name, hints)` checks the name first and then the hints, and the first matching pattern in `VISUALS` wins, so pattern order matters.
 - Prices are in paise. Show `(price ?? defaultPrice) / 100`.
 - **Home filtering** is pure logic in `utils/restaurantFilters.js` (`applyFilters`, `FILTERS`, `SORTS`, `getTopCuisines`). `Body.js` only holds the filter state, so add new chips or sorts there, not in components.
+
+### Page conventions
+
+- Every route component calls `useDocumentTitle("…")` (`utils/useDocumentTitle.js`), which renders as "<title> | FeastFly".
+- `AppLayout` provides a "Skip to content" link targeting `<main id="main">`. `index.css` disables motion under `prefers-reduced-motion`.
 
 ### UI building blocks
 

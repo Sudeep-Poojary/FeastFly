@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "./ui/Button";
+import useDocumentTitle from "../utils/useDocumentTitle";
 import { ChevronDownIcon } from "./ui/Icons";
 
 const FAQS = [
@@ -60,6 +61,7 @@ const Field = ({ id, label, error, multiline = false, ...props }) => {
 };
 
 const Contact = () => {
+  useDocumentTitle("Help & Support");
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [sentTo, setSentTo] = useState(null);

@@ -34,8 +34,13 @@ const Carousel = ({ title, children, className = "" }) => {
     return () => window.removeEventListener("resize", update);
   }, [update, children]);
 
-  const scroll = (dir) =>
-    trackRef.current?.scrollBy({ left: dir * trackRef.current.clientWidth * 0.8, behavior: "smooth" });
+  const scroll = (dir) => {
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    trackRef.current?.scrollBy({
+      left: dir * trackRef.current.clientWidth * 0.8,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
 
   return (
     <section className={className} aria-label={title}>

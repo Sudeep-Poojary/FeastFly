@@ -8,6 +8,7 @@ import CuisineCarousel from "./home/CuisineCarousel";
 import FilterBar from "./home/FilterBar";
 import useRestaurantList from "../utils/useRestaurantList";
 import useInfiniteScroll from "../utils/useInfiniteScroll";
+import useDocumentTitle from "../utils/useDocumentTitle";
 import { applyFilters, getTopCuisines } from "../utils/restaurantFilters";
 
 const RestaurantLink = ({ restaurant, className = "" }) => (
@@ -20,6 +21,7 @@ const RestaurantLink = ({ restaurant, className = "" }) => (
 );
 
 const Body = () => {
+  useDocumentTitle("Order food online in Mumbai");
   const {
     restaurants,
     firstPage,

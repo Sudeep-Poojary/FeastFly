@@ -1,6 +1,7 @@
 import { RESTAURANTS } from "../data/restaurants";
 import { MORE_RESTAURANTS } from "../data/moreRestaurants";
 import useGithubUser from "../utils/useGithubUser";
+import useDocumentTitle from "../utils/useDocumentTitle";
 import Skeleton from "./ui/Skeleton";
 import { LogoMark } from "./ui/Logo";
 
@@ -37,6 +38,9 @@ const CreatorCard = () => {
       {user?.avatar_url ? (
         <img
           src={user.avatar_url}
+          loading="lazy"
+          width="96"
+          height="96"
           alt={`${user.name ?? GITHUB_USERNAME}'s avatar`}
           className="size-24 rounded-2xl object-cover shadow-card"
         />
@@ -65,55 +69,58 @@ const CreatorCard = () => {
   );
 };
 
-const About = () => (
-  <div className="mx-auto max-w-4xl py-10">
-    <section className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-      <LogoMark className="size-20 shrink-0" />
-      <div>
-        <h1 className="text-3xl font-extrabold text-ink sm:text-4xl">About FeastFly</h1>
-        <p className="mt-2 text-lg text-ink-muted">
-          Hot food from your favourite neighbourhood restaurants, delivered fast.
-        </p>
-      </div>
-    </section>
-
-    <section className="mt-10 space-y-4 text-ink-muted">
-      <p>
-        FeastFly started as a learning project and grew into a full food-ordering experience:
-        browse restaurants, filter by cuisine, rating or price, explore menus, and build a cart
-        with a live bill — all in a fast, responsive interface.
-      </p>
-      <p>
-        Restaurant and menu data comes from a Swiggy-style dummy API, with a bundled
-        dataset as a fallback so the app always works.
-      </p>
-    </section>
-
-    <dl className="mt-10 grid grid-cols-3 gap-4">
-      {STATS.map(([value, label]) => (
-        <div key={label} className="rounded-2xl bg-brand-50 p-5 text-center">
-          <dt className="text-sm font-semibold text-ink-muted">{label}</dt>
-          <dd className="text-3xl font-extrabold text-brand-600">{value}</dd>
+const About = () => {
+  useDocumentTitle("About");
+  return (
+    <div className="mx-auto max-w-4xl py-10">
+      <section className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+        <LogoMark className="size-20 shrink-0" />
+        <div>
+          <h1 className="text-3xl font-extrabold text-ink sm:text-4xl">About FeastFly</h1>
+          <p className="mt-2 text-lg text-ink-muted">
+            Hot food from your favourite neighbourhood restaurants, delivered fast.
+          </p>
         </div>
-      ))}
-    </dl>
+      </section>
 
-    <section className="mt-12" aria-labelledby="tech-heading">
-      <h2 id="tech-heading" className="text-xl font-extrabold text-ink">Built with</h2>
-      <ul className="mt-4 flex flex-wrap gap-2">
-        {TECH.map((t) => (
-          <li key={t} className="rounded-full border border-gray-200 px-4 py-1.5 text-sm font-semibold text-ink">
-            {t}
-          </li>
+      <section className="mt-10 space-y-4 text-ink-muted">
+        <p>
+          FeastFly started as a learning project and grew into a full food-ordering experience:
+          browse restaurants, filter by cuisine, rating or price, explore menus, and build a cart
+          with a live bill — all in a fast, responsive interface.
+        </p>
+        <p>
+          Restaurant and menu data comes from a Swiggy-style dummy API, with a bundled
+          dataset as a fallback so the app always works.
+        </p>
+      </section>
+
+      <dl className="mt-10 grid grid-cols-3 gap-4">
+        {STATS.map(([value, label]) => (
+          <div key={label} className="rounded-2xl bg-brand-50 p-5 text-center">
+            <dt className="text-sm font-semibold text-ink-muted">{label}</dt>
+            <dd className="text-3xl font-extrabold text-brand-600">{value}</dd>
+          </div>
         ))}
-      </ul>
-    </section>
+      </dl>
 
-    <section className="mt-12 rounded-3xl border border-gray-100 p-6 shadow-card" aria-labelledby="creator-heading">
-      <h2 id="creator-heading" className="mb-5 text-xl font-extrabold text-ink">Made by</h2>
-      <CreatorCard />
-    </section>
-  </div>
-);
+      <section className="mt-12" aria-labelledby="tech-heading">
+        <h2 id="tech-heading" className="text-xl font-extrabold text-ink">Built with</h2>
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {TECH.map((t) => (
+            <li key={t} className="rounded-full border border-gray-200 px-4 py-1.5 text-sm font-semibold text-ink">
+              {t}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-12 rounded-3xl border border-gray-100 p-6 shadow-card" aria-labelledby="creator-heading">
+        <h2 id="creator-heading" className="mb-5 text-xl font-extrabold text-ink">Made by</h2>
+        <CreatorCard />
+      </section>
+    </div>
+  );
+};
 
 export default About;

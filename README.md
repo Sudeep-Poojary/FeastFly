@@ -2,6 +2,14 @@
 
 A Swiggy-style food ordering app built with React.
 
+## Features ✨
+
+- **Home:** "What's on your mind?" cuisine carousel, top-rated row, live search, sort, quick filters (fast delivery, 4.0+, pure veg, offers, under ₹300), and infinite scroll through 40 restaurants
+- **Restaurant menu:** rating and delivery info, deals, dish search, a "Veg only" switch, collapsible categories, and ADD → quantity steppers
+- **Cart:** one restaurant per cart (with a "replace cart?" prompt), a bill with delivery, platform fee and GST, and a cart that's saved across reloads
+- **Also:** a FeastFly Mart (grocery) coming-soon page, an About page, a Help & Support page with FAQ and a validated contact form, a 404 page, an offline banner, and a mobile menu
+- **Built for everyone:** responsive layouts, keyboard and screen-reader friendly controls, a skip link, page titles, and reduced-motion support
+
 ## Technologies 🛠️
 
 - HTML, CSS, JavaScript
