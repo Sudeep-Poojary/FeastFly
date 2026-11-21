@@ -5,11 +5,8 @@ import "@testing-library/jest-dom";
 import RestaurantMenu from "../RestaurantMenu";
 import Header from "../Header";
 import Cart from "../Cart";
-import appStore from "../../utils/appStore";
+import { makeStore } from "../../utils/appStore";
 import { buildMenuResponse } from "../../data/restaurants";
-
-// NOTE: these tests share the `appStore` singleton, so they run in order and
-// build on each other's cart state.
 
 beforeEach(() => {
   global.fetch = jest.fn(() =>
@@ -20,63 +17,50 @@ beforeEach(() => {
   );
 });
 
-const renderMenuPage = async ({ withCart = false } = {}) => {
+// Menu + cart on one screen, with a fresh store per test.
+const renderMenuAndCart = async () => {
   await act(async () => {
     render(
-      <Provider store={appStore}>
+      <Provider store={makeStore()}>
         <MemoryRouter initialEntries={["/restaurants/123456"]}>
           <Header />
           <Routes>
             <Route path="/restaurants/:resId" element={<RestaurantMenu />} />
           </Routes>
-          {withCart && <Cart />}
+          <Cart />
         </MemoryRouter>
       </Provider>
     );
   });
 };
 
-it("Should load the Restaurant Menu and open an accordion", async () => {
-  await renderMenuPage();
-
-  expect(screen.getByText("Pizza Paradise")).toBeInTheDocument();
-  // "Recommended" is open by default
-  expect(screen.getAllByTestId("foodItems").length).toBe(3);
-
-  fireEvent.click(screen.getByText("Specialty Pizzas (3)"));
-  expect(screen.getAllByTestId("foodItems").length).toBe(3);
-  expect(screen.getByText("BBQ Chicken Pizza")).toBeInTheDocument();
-});
-
 it("Should start with an empty cart", async () => {
-  await renderMenuPage();
+  await renderMenuAndCart();
 
   expect(screen.getByRole("link", { name: "Cart, 0 items" })).toBeInTheDocument();
+  expect(screen.getByText("Your Cart is Empty!!!")).toBeInTheDocument();
 });
 
-it("Should add food items to the cart", async () => {
-  await renderMenuPage();
+it("Should show added items with their quantities", async () => {
+  await renderMenuAndCart();
 
-  const addBtns = screen.getAllByRole("button", { name: "ADD" });
-  fireEvent.click(addBtns[0]);
-  expect(screen.getByRole("link", { name: "Cart, 1 item" })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "Add Margherita Pizza" }));
+  fireEvent.click(screen.getByRole("button", { name: "Add one more Margherita Pizza" }));
+  fireEvent.click(screen.getByRole("button", { name: "Add Pepperoni Pizza" }));
 
-  fireEvent.click(addBtns[1]);
-  expect(screen.getByRole("link", { name: "Cart, 2 items" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Cart, 3 items" })).toBeInTheDocument();
+  expect(screen.getAllByTestId("cartItems")).toHaveLength(2);
+  expect(screen.getByText("× 2 - ₹598")).toBeInTheDocument();
 });
 
-it("Should show the added items in the Cart", async () => {
-  await renderMenuPage({ withCart: true });
+it("Should clear the cart", async () => {
+  await renderMenuAndCart();
 
-  expect(screen.getAllByTestId("cartItems").length).toBe(2);
-});
-
-it("Should clear the Cart", async () => {
-  await renderMenuPage({ withCart: true });
-
+  fireEvent.click(screen.getByRole("button", { name: "Add Margherita Pizza" }));
   fireEvent.click(screen.getByRole("button", { name: "Clear Cart" }));
 
-  expect(screen.queryAllByTestId("cartItems").length).toBe(0);
+  expect(screen.queryAllByTestId("cartItems")).toHaveLength(0);
   expect(screen.getByText("Your Cart is Empty!!!")).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Cart, 0 items" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Add Margherita Pizza" })).toBeInTheDocument();
 });

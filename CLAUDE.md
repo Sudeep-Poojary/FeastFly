@@ -48,11 +48,14 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 
 ### State
 
-- **Redux Toolkit:** a single `cart` slice (`utils/cartSlice.js`) with `addItem`, `removeItem` (pops the last item), and `clearCart`. Items are normalized item-info objects.
+- **Redux Toolkit:** a single `cart` slice (`utils/cartSlice.js`). Its state is `{ restaurant: {id,name,areaName} | null, items: [{ info, qty }] }`.
+  - Actions: `addItem({ item, restaurant })` adds or increments. `decrementItem(id)` removes the line at 0. `removeItem(id)` drops the line. `clearCart()`. The restaurant resets when the cart empties.
+  - Read state through the exported selectors (`selectCartCount`, `selectItemQty(id)`, `selectSubtotal`, ...) and price through `itemPrice(info)`, rather than reaching into `store.cart`.
+  - `utils/appStore.js` exports `makeStore(preloadedState)`. Tests create a fresh store per test with it.
 - **Context:** `UserContext` with a default `loggedInUser: "Guest"`.
 
 ## Tests
 
-Tests live in `src/**/__tests__/` and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `restaurantGrid`, `searchInput`, `foodItems`, `cartItems`, `cartCount`); keep those attributes when editing components.
+Tests live in `src/**/__tests__/` and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `restaurantGrid`, `searchInput`, `menuSearch`, `foodItems`, `itemQty`, `viewCartBar`, `cartItems`, `cartCount`); keep those attributes when editing components.
 
-`Cart.test.js` uses the real `appStore` singleton, so cart state carries over between its tests, and they must run in order.
+Component tests that need Redux wrap in `<Provider store={makeStore()}>`, so every test starts with an empty cart. Menu dish filtering is the pure `utils/menuFilters.js` (`filterMenu`). Menu sections are in `components/menu/`.

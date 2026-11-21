@@ -1,37 +1,35 @@
 import ItemList from "./ItemList";
+import { ChevronDownIcon } from "./ui/Icons";
 
-const RestaurantCategory = ({
-  data,
-  showItems,
-  setShowIndex,
-  setShowIndexClose,
-}) => {
-  const handleClick = () => {
-    if (showItems === true) {
-      setShowIndexClose();
-    } else {
-      setShowIndex();
-    }
-  };
+// Accordion section. Open state is controlled by the parent (RestaurantMenu).
+const RestaurantCategory = ({ data, restaurant, isOpen, onToggle }) => {
+  const panelId = `category-${data.title.replace(/\W+/g, "-").toLowerCase()}`;
 
   return (
-    <div>
-      {/* Accordion Header */}
-      <div className="w-6/12 m-auto my-4 bg-gray-50 shadow-lg p-4">
-        <div
-          className="flex justify-between cursor-pointer"
-          onClick={handleClick}
+    <section className="border-b-[16px] border-gray-100 last:border-b-0">
+      <h3>
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          className="flex w-full items-center justify-between py-5 text-left"
         >
-          <span className="font-bold text-lg">
+          <span className="text-lg font-extrabold text-ink">
             {data.title} ({data.items.length})
           </span>
-          <span className="font-bold text-lg">∨</span>
-        </div>
+          <ChevronDownIcon
+            className={`size-6 text-ink transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          />
+        </button>
+      </h3>
 
-        {/*Accordion Body */}
-        {showItems && <ItemList items={data.items} />}
-      </div>
-    </div>
+      {isOpen && (
+        <div id={panelId}>
+          <ItemList items={data.items} restaurant={restaurant} />
+        </div>
+      )}
+    </section>
   );
 };
 

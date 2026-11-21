@@ -16,6 +16,7 @@ import {
 } from "./ui/Icons";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { selectCartCount } from "../utils/cartSlice";
 
 const NAV_LINKS = [
   { to: "/grocery", label: "Grocery", Icon: BasketIcon },
@@ -50,7 +51,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const onlineStatus = useOnlineStatus();
   const { loggedInUser } = useContext(UserContext);
-  const cartCount = useSelector((store) => store.cart.items.length);
+  const cartCount = useSelector(selectCartCount);
   const { pathname } = useLocation();
 
   // Close the mobile menu whenever the route changes.
