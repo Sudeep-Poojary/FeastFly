@@ -62,15 +62,3 @@ The repo includes a `vercel.json`, so it deploys as-is:
 
 1. Import the GitHub repo in [Vercel](https://vercel.com/new).
 2. Keep the defaults. `vercel.json` sets the build command (`npm run build`), the output folder (`dist`), and an SPA rewrite so links like `/restaurants/123456` work on refresh.
-
-## Screenshots 📸
-
-<div align="center">
-
-![FeastFly HomePage](./src/images/image1.png "Home Page")
-
-![FeastFly MenuPage](./src/images/image2.png "Menu Page")
-
-![FeastFly Cartpage](./src/images/image3.png "Cart Page")
-
-</div>
