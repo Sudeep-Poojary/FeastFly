@@ -2,11 +2,11 @@ import { act, render } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { Provider } from "react-redux";
 import "@testing-library/jest-dom";
-import Body from "../Body";
-import RestaurantMenu from "../RestaurantMenu";
-import Cart from "../Cart";
-import Contact from "../Contact";
-import Grocery from "../Grocery";
+import Body from "../home/Body";
+import RestaurantMenu from "../menu/RestaurantMenu";
+import Cart from "../cart/Cart";
+import Contact from "../contact/Contact";
+import Grocery from "../grocery/Grocery";
 import { makeStore } from "../../utils/appStore";
 import { buildListResponse, buildMenuResponse } from "../../data/restaurants";
 

@@ -5,14 +5,14 @@ import {
   selectCartItems,
   selectCartRestaurant,
   selectSubtotal,
-} from "../utils/cartSlice";
-import { computeBill, formatRupees } from "../utils/bill";
-import useDocumentTitle from "../utils/useDocumentTitle";
+} from "../../utils/cartSlice";
+import { computeBill, formatRupees } from "../../utils/bill";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 import CartItem from "./CartItem";
-import BillDetails from "./cart/BillDetails";
-import FoodImage from "./FoodImage";
-import Button from "./ui/Button";
-import { PinIcon, UserIcon } from "./ui/Icons";
+import BillDetails from "./BillDetails";
+import FoodImage from "../ui/FoodImage";
+import Button from "../ui/Button";
+import { PinIcon, UserIcon } from "../ui/Icons";
 
 const EmptyCart = () => (
   <div className="py-24 text-center">

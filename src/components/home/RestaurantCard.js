@@ -1,5 +1,5 @@
-import FoodImage from "./FoodImage";
-import RatingBadge from "./ui/RatingBadge";
+import FoodImage from "../ui/FoodImage";
+import RatingBadge from "../ui/RatingBadge";
 
 const RestaurantCard = ({ resData }) => {
   const {

@@ -7,19 +7,19 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { Provider } from "react-redux";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Body from "./components/Body";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Error from "./components/Error";
-import RestaurantMenu from "./components/RestaurantMenu";
-import Cart from "./components/Cart";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import Body from "./components/home/Body";
+import About from "./components/about/About";
+import Contact from "./components/contact/Contact";
+import Error from "./components/layout/Error";
+import RestaurantMenu from "./components/menu/RestaurantMenu";
+import Cart from "./components/cart/Cart";
 import appStore from "./utils/appStore";
 import Skeleton from "./components/ui/Skeleton";
 
 // Code-split: the Grocery bundle is only downloaded when the route is visited.
-const Grocery = lazy(() => import("./components/Grocery"));
+const Grocery = lazy(() => import("./components/grocery/Grocery"));
 
 const AppLayout = () => {
   return (

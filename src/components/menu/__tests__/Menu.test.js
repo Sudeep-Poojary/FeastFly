@@ -3,9 +3,9 @@ import { MemoryRouter, Route, Routes } from "react-router";
 import { Provider } from "react-redux";
 import "@testing-library/jest-dom";
 import RestaurantMenu from "../RestaurantMenu";
-import Header from "../Header";
-import { makeStore } from "../../utils/appStore";
-import { buildMenuResponse } from "../../data/restaurants";
+import Header from "../../layout/Header";
+import { makeStore } from "../../../utils/appStore";
+import { buildMenuResponse } from "../../../data/restaurants";
 
 const mockMenuFetch = (resId) => {
   global.fetch = jest.fn(() =>

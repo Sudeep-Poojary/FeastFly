@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "./ui/Button";
-import useDocumentTitle from "../utils/useDocumentTitle";
+import Button from "../ui/Button";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 // Lazy-loaded route (see App.js): this file ships in its own bundle.
 

@@ -2,11 +2,11 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { Provider } from "react-redux";
 import "@testing-library/jest-dom";
-import RestaurantMenu from "../RestaurantMenu";
-import Header from "../Header";
+import RestaurantMenu from "../../menu/RestaurantMenu";
+import Header from "../../layout/Header";
 import Cart from "../Cart";
-import { makeStore } from "../../utils/appStore";
-import { buildMenuResponse, MENUS, RESTAURANTS } from "../../data/restaurants";
+import { makeStore } from "../../../utils/appStore";
+import { buildMenuResponse, MENUS, RESTAURANTS } from "../../../data/restaurants";
 
 beforeEach(() => {
   global.fetch = jest.fn(() =>

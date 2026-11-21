@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm start`: Parcel dev server at <http://localhost:1234>. The entry is `index.html`, which loads `src/App.js`. It writes to `.dev-dist/`, kept separate from the production `dist/`. If the browser shows "Cannot find module" after edits, hard-refresh; if that doesn't fix it, stop the server, delete `.parcel-cache`, and restart.
 - `npm run build`: production build into `dist/`. This is what Vercel runs (see `vercel.json`).
 - `npm test`: runs all Jest tests. Coverage is on by default via `jest.config.js` and written to `coverage/`.
-- `npx jest src/components/__tests__/Cart.test.js`: runs one test file.
+- `npx jest src/components/cart/__tests__/Cart.test.js`: runs one test file.
 - `npx jest -t "falls back to local"`: runs tests whose name matches.
 - Add `--coverage=false` for faster, less noisy runs.
 
@@ -37,9 +37,9 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
   - `useRestaurantList()` returns `{ restaurants, firstPage, loading, error, hasMore, loadingMore, loadMoreError, loadMore }`. It de-duplicates by `id`, and `loadMore` ignores calls while a page is in flight. The home carousels use `firstPage`, so they don't shift as more pages load.
   - `useInfiniteScroll(loadMore, { enabled })` returns a ref for a sentinel element, backed by `IntersectionObserver`. It is a no-op in jsdom, so tests mock `IntersectionObserver` (see `InfiniteScroll.test.js`). A "Show more restaurants" button is the manual fallback.
   - `useRestaurantMenu(resId)` returns `{ menu, loading, error }`.
-- **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/FoodImage.js` renders an emoji-on-gradient placeholder. `getFoodVisual(name, hints)` checks the name first and then the hints, and the first matching pattern in `VISUALS` wins, so pattern order matters.
+- **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/ui/FoodImage.js` renders an emoji-on-gradient placeholder. `getFoodVisual(name, hints)` checks the name first and then the hints, and the first matching pattern in `VISUALS` wins, so pattern order matters.
 - Prices are in paise. Show `(price ?? defaultPrice) / 100`.
-- **Home filtering** is pure logic in `utils/restaurantFilters.js` (`applyFilters`, `FILTERS`, `SORTS`, `getTopCuisines`). `Body.js` only holds the filter state, so add new chips or sorts there, not in components.
+- **Home filtering** is pure logic in `utils/restaurantFilters.js` (`applyFilters`, `FILTERS`, `SORTS`, `getTopCuisines`). `home/Body.js` only holds the filter state, so add new chips or sorts there, not in components.
 
 ### Page conventions
 
@@ -48,8 +48,17 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 
 ### UI building blocks
 
-- `components/ui/`: shared primitives (`Button`, `Icons`, `Logo`, `RatingBadge`, `Skeleton`, `Carousel`). Reuse them rather than restyling inline.
-- `components/home/`: home-page sections (`CuisineCarousel`, `FilterBar`).
+`src/components/` is organised **by feature**. Each folder holds that feature's components and its own `__tests__/`:
+
+- `layout/`: app shell (`Header`, `Footer`, `Error` for the 404/error route).
+- `home/`: `Body` (the `/` route), `RestaurantCard`, `Shimmer`/`CardSkeleton`, `CuisineCarousel`, `FilterBar`.
+- `menu/`: `RestaurantMenu` (the `/restaurants/:resId` route), `RestaurantCategory`, `ItemList`, `AddToCartButton`, `MenuHeader`, `DealsCarousel`, `ViewCartBar`, `MenuSkeleton`.
+- `cart/`: `Cart` (the `/cart` route), `CartItem`, `BillDetails`.
+- `about/`, `contact/`, `grocery/`: one page each.
+- `ui/`: shared primitives (`Button`, `Icons`, `Logo`, `RatingBadge`, `Skeleton`, `Carousel`, `Modal`, `VegIcon`, `FoodImage`). Reuse them rather than restyling inline.
+- `components/__tests__/` keeps only cross-feature tests (`Titles.test.js`).
+
+A component used by more than one feature belongs in `ui/`. `AddToCartButton` lives in `menu/` but the cart reuses it.
 - Design tokens live in the `@theme` block in `index.css`: `brand-*`, `ink`, `ink-muted`, `ink-subtle`, `rating`, `veg`, `nonveg`, `rounded-card`, `shadow-card`, `shadow-header`. The header is `h-20`, so sticky elements below it use `top-20`.
 
 ### State
@@ -65,6 +74,6 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 
 ## Tests
 
-Tests live in `src/**/__tests__/` and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `restaurantGrid`, `searchInput`, `menuSearch`, `foodItems`, `itemQty`, `viewCartBar`, `cartItems`, `lineTotal`, `toPay`, `cartCount`); keep those attributes when editing components.
+Tests live in `__tests__/` folders next to the code they cover (`src/utils/__tests__`, `src/data/__tests__`, `src/components/<feature>/__tests__`) and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `restaurantGrid`, `searchInput`, `menuSearch`, `foodItems`, `itemQty`, `viewCartBar`, `cartItems`, `lineTotal`, `toPay`, `cartCount`); keep those attributes when editing components.
 
-Component tests that need Redux wrap in `<Provider store={makeStore()}>`, so every test starts with an empty cart. Menu dish filtering is the pure `utils/menuFilters.js` (`filterMenu`). Menu sections are in `components/menu/`.
+Component tests that need Redux wrap in `<Provider store={makeStore()}>`, so every test starts with an empty cart. Menu dish filtering is the pure `utils/menuFilters.js` (`filterMenu`).

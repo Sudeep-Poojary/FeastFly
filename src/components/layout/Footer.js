@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import Logo from "./ui/Logo";
+import Logo from "../ui/Logo";
 
 const COLUMNS = [
   {

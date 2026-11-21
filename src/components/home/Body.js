@@ -2,14 +2,14 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer, { CardSkeleton } from "./Shimmer";
-import Carousel from "./ui/Carousel";
-import Button from "./ui/Button";
-import CuisineCarousel from "./home/CuisineCarousel";
-import FilterBar from "./home/FilterBar";
-import useRestaurantList from "../utils/useRestaurantList";
-import useInfiniteScroll from "../utils/useInfiniteScroll";
-import useDocumentTitle from "../utils/useDocumentTitle";
-import { applyFilters, getTopCuisines } from "../utils/restaurantFilters";
+import Carousel from "../ui/Carousel";
+import Button from "../ui/Button";
+import CuisineCarousel from "./CuisineCarousel";
+import FilterBar from "./FilterBar";
+import useRestaurantList from "../../utils/useRestaurantList";
+import useInfiniteScroll from "../../utils/useInfiniteScroll";
+import useDocumentTitle from "../../utils/useDocumentTitle";
+import { applyFilters, getTopCuisines } from "../../utils/restaurantFilters";
 
 const RestaurantLink = ({ restaurant, className = "" }) => (
   <Link

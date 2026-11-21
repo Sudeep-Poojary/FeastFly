@@ -1,5 +1,5 @@
 import Carousel from "../ui/Carousel";
-import FoodImage from "../FoodImage";
+import FoodImage from "../ui/FoodImage";
 
 // "What's on your mind?" — round cuisine tiles. Clicking one filters the
 // restaurant grid; clicking the active one clears it.

@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
-import Logo from "./ui/Logo";
-import Button from "./ui/Button";
-import useDocumentTitle from "../utils/useDocumentTitle";
+import Logo from "../ui/Logo";
+import Button from "../ui/Button";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 
 // Rendered by the router outside AppLayout (no header/footer), so it carries
 // its own minimal branding.

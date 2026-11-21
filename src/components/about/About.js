@@ -1,9 +1,9 @@
-import { RESTAURANTS } from "../data/restaurants";
-import { MORE_RESTAURANTS } from "../data/moreRestaurants";
-import useGithubUser from "../utils/useGithubUser";
-import useDocumentTitle from "../utils/useDocumentTitle";
-import Skeleton from "./ui/Skeleton";
-import { LogoMark } from "./ui/Logo";
+import { RESTAURANTS } from "../../data/restaurants";
+import { MORE_RESTAURANTS } from "../../data/moreRestaurants";
+import useGithubUser from "../../utils/useGithubUser";
+import useDocumentTitle from "../../utils/useDocumentTitle";
+import Skeleton from "../ui/Skeleton";
+import { LogoMark } from "../ui/Logo";
 
 const GITHUB_USERNAME = "Sudeep-Poojary";
 

@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router";
 import { Provider } from "react-redux";
 import "@testing-library/jest-dom";
 import Header from "../Header";
-import appStore from "../../utils/appStore";
+import appStore from "../../../utils/appStore";
 
 const renderHeader = () =>
   render(

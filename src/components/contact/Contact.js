@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "./ui/Button";
-import useDocumentTitle from "../utils/useDocumentTitle";
-import { ChevronDownIcon } from "./ui/Icons";
+import Button from "../ui/Button";
+import useDocumentTitle from "../../utils/useDocumentTitle";
+import { ChevronDownIcon } from "../ui/Icons";
 
 const FAQS = [
   [

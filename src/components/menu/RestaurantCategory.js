@@ -1,5 +1,5 @@
 import ItemList from "./ItemList";
-import { ChevronDownIcon } from "./ui/Icons";
+import { ChevronDownIcon } from "../ui/Icons";
 
 // Accordion section. Open state is controlled by the parent (RestaurantMenu).
 const RestaurantCategory = ({ data, restaurant, isOpen, onToggle }) => {

@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
 import { useParams } from "react-router";
-import useRestaurantMenu from "../utils/useRestaurantMenu";
-import { filterMenu } from "../utils/menuFilters";
-import useDocumentTitle from "../utils/useDocumentTitle";
+import useRestaurantMenu from "../../utils/useRestaurantMenu";
+import { filterMenu } from "../../utils/menuFilters";
+import useDocumentTitle from "../../utils/useDocumentTitle";
 import RestaurantCategory from "./RestaurantCategory";
-import MenuHeader from "./menu/MenuHeader";
-import DealsCarousel from "./menu/DealsCarousel";
-import ViewCartBar from "./menu/ViewCartBar";
-import MenuSkeleton from "./menu/MenuSkeleton";
-import Button from "./ui/Button";
-import { SearchIcon } from "./ui/Icons";
+import MenuHeader from "./MenuHeader";
+import DealsCarousel from "./DealsCarousel";
+import ViewCartBar from "./ViewCartBar";
+import MenuSkeleton from "./MenuSkeleton";
+import Button from "../ui/Button";
+import { SearchIcon } from "../ui/Icons";
 
 const VegToggle = ({ checked, onChange }) => (
   <button

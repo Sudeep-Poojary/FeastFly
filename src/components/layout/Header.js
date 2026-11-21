@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router";
-import Logo from "./ui/Logo";
+import Logo from "../ui/Logo";
 import {
   BasketIcon,
   CartIcon,
@@ -13,10 +13,10 @@ import {
   PinIcon,
   UserIcon,
   WifiOffIcon,
-} from "./ui/Icons";
-import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContext";
-import { selectCartCount } from "../utils/cartSlice";
+} from "../ui/Icons";
+import useOnlineStatus from "../../utils/useOnlineStatus";
+import UserContext from "../../utils/UserContext";
+import { selectCartCount } from "../../utils/cartSlice";
 
 const NAV_LINKS = [
   { to: "/grocery", label: "Grocery", Icon: BasketIcon },

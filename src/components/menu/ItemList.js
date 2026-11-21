@@ -1,8 +1,8 @@
-import FoodImage from "./FoodImage";
-import VegIcon from "./ui/VegIcon";
-import AddToCartButton from "./menu/AddToCartButton";
-import { itemPrice } from "../utils/cartSlice";
-import { formatRupees } from "../utils/bill";
+import FoodImage from "../ui/FoodImage";
+import VegIcon from "../ui/VegIcon";
+import AddToCartButton from "./AddToCartButton";
+import { itemPrice } from "../../utils/cartSlice";
+import { formatRupees } from "../../utils/bill";
 
 const MenuItem = ({ item, restaurant }) => (
   <li

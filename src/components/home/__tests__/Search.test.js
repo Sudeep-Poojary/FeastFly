@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 import "@testing-library/jest-dom";
 import Body from "../Body";
-import { buildListResponse } from "../../data/restaurants";
+import { buildListResponse } from "../../../data/restaurants";
 
 beforeEach(() => {
   global.fetch = jest.fn(() =>

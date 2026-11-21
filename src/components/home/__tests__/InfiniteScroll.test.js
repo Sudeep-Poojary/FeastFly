@@ -2,8 +2,8 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 import "@testing-library/jest-dom";
 import Body from "../Body";
-import { buildListResponse } from "../../data/restaurants";
-import { MORE_RESTAURANTS } from "../../data/moreRestaurants";
+import { buildListResponse } from "../../../data/restaurants";
+import { MORE_RESTAURANTS } from "../../../data/moreRestaurants";
 
 // Minimal IntersectionObserver mock: tests trigger intersections manually.
 let observers = [];

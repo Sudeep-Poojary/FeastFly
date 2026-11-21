@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import VegIcon from "./ui/VegIcon";
-import { CloseIcon } from "./ui/Icons";
-import AddToCartButton from "./menu/AddToCartButton";
-import { itemPrice, removeItem } from "../utils/cartSlice";
-import { formatRupees } from "../utils/bill";
+import VegIcon from "../ui/VegIcon";
+import { CloseIcon } from "../ui/Icons";
+import AddToCartButton from "../menu/AddToCartButton";
+import { itemPrice, removeItem } from "../../utils/cartSlice";
+import { formatRupees } from "../../utils/bill";
 
 // One cart line: veg mark, name, stepper, line total and a remove button.
 const CartItem = ({ line, restaurant }) => {
