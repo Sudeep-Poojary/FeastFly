@@ -16,6 +16,7 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Cart from "./components/Cart";
 import appStore from "./utils/appStore";
+import Skeleton from "./components/ui/Skeleton";
 
 // Code-split: the Grocery bundle is only downloaded when the route is visited.
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -46,7 +47,13 @@ const appRouter = createBrowserRouter([
       {
         path: "/grocery",
         element: (
-          <Suspense fallback={<h1>Loading.....</h1>}>
+          <Suspense
+            fallback={
+              <div className="py-8" role="status" aria-label="Loading">
+                <Skeleton className="h-72 w-full rounded-3xl" />
+              </div>
+            }
+          >
             <Grocery />
           </Suspense>
         ),

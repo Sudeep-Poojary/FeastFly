@@ -1,58 +1,68 @@
-import { render, screen } from "@testing-library/react";
-import Contact from "../Contact";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import Contact, { validateContact } from "../Contact";
 
-describe("Contact Us Page Test Cases", () => {
-  // beforeAll(() => {
-  //   console.log("Before All");
-  // });
+const fill = (label, value) =>
+  fireEvent.change(screen.getByLabelText(label), { target: { value } });
 
-  // beforeEach(() => {
-  //   console.log("Before Each");
-  // });
-
-  // afterAll(() => {
-  //   console.log("After All");
-  // });
-
-  // afterEach(() => {
-  //   console.log("After Each");
-  // });
-
-  it("Should load contact us component", () => {
-    // 1. Render
+describe("Contact page", () => {
+  it("renders the heading, labelled fields and submit button", () => {
     render(<Contact />);
 
-    // 2. Query
-    const heading = screen.getByRole("heading");
-
-    // 3. Assertion
-    expect(heading).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Help & Support" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Name")).toHaveAttribute("placeholder", "Name");
+    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText("Message")).toBeInTheDocument();
+    expect(screen.getAllByRole("textbox")).toHaveLength(3);
+    expect(screen.getByRole("button", { name: "Send message" })).toBeInTheDocument();
   });
 
-  it("Should load button inside the contact us component", () => {
+  it("shows FAQs", () => {
     render(<Contact />);
 
-    const button = screen.getByRole("button");
-
-    expect(button).toBeInTheDocument();
+    expect(screen.getByText("When is delivery free?")).toBeInTheDocument();
   });
 
-  it("Should load input name inside the contact us component", () => {
+  it("shows inline errors and focuses the first invalid field", () => {
     render(<Contact />);
 
-    const inputName = screen.getByPlaceholderText("Name");
+    fill("Email", "not-an-email");
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
 
-    expect(inputName).toBeInTheDocument();
+    expect(screen.getByText("Please enter your name.")).toBeInTheDocument();
+    expect(screen.getByText("Please enter a valid email address.")).toBeInTheDocument();
+    expect(screen.getByText("Please write at least 10 characters.")).toBeInTheDocument();
+    expect(screen.getByLabelText("Name")).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByLabelText("Name")).toHaveFocus();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
 
-  it("Should load 2 input boxes on the contact us component", () => {
+  it("clears a field's error as soon as it is edited", () => {
     render(<Contact />);
 
-    const inputBoxes = screen.getAllByRole("textbox");
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+    fill("Name", "A");
 
-    // console.log(inputBoxes.length);
+    expect(screen.queryByText("Please enter your name.")).not.toBeInTheDocument();
+    expect(screen.getByText("Please enter your email.")).toBeInTheDocument();
+  });
 
-    expect(inputBoxes.length).toBe(2);
+  it("confirms and resets on a valid submit", () => {
+    render(<Contact />);
+
+    fill("Name", "  Asha ");
+    fill("Email", "asha@example.com");
+    fill("Message", "Loved the biryani, thanks!");
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+
+    expect(screen.getByRole("status")).toHaveTextContent("Thanks, Asha!");
+    expect(screen.getByLabelText("Name")).toHaveValue("");
+    expect(screen.getByLabelText("Message")).toHaveValue("");
+  });
+});
+
+describe("validateContact", () => {
+  it("accepts a complete form", () => {
+    expect(validateContact({ name: "A", email: "a@b.co", message: "Hello there!" })).toEqual({});
   });
 });

@@ -21,7 +21,8 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 
 - It uses `createBrowserRouter` from **`react-router` v7**. Import from `"react-router"`, not `react-router-dom`.
 - `AppLayout` wraps every route in the Redux `Provider` (`utils/appStore.js`), then renders `Header` + `<Outlet />`.
-- `Grocery` is lazy-loaded with `React.lazy` + `Suspense`.
+- `Grocery` ("FeastFly Mart, coming soon") is lazy-loaded with `React.lazy` + `Suspense`, so it ships in its own bundle.
+- `About` fetches the author's public GitHub profile (`utils/useGithubUser.js`) and degrades gracefully if that fails. `Contact` (Help & Support) has an FAQ and a validated form, with no backend; the pure `validateContact` is exported for tests.
 - Deep links work in production through the SPA rewrite in `vercel.json`.
 
 ### Data flow
