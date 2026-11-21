@@ -34,6 +34,13 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 - **Hooks:** `useRestaurantList()` and `useRestaurantMenu(resId)` return `{ ..., loading, error }`. Components show `Shimmer` while loading and an error message on failure.
 - **Images:** the API's `cloudinaryImageId` / `imageId` values are dummies. `components/FoodImage.js` renders an emoji-on-gradient placeholder chosen from the dish or cuisine name.
 - Prices are in paise. Show `(price ?? defaultPrice) / 100`.
+- **Home filtering** is pure logic in `utils/restaurantFilters.js` (`applyFilters`, `FILTERS`, `SORTS`, `getTopCuisines`). `Body.js` only holds the filter state, so add new chips or sorts there, not in components.
+
+### UI building blocks
+
+- `components/ui/`: shared primitives (`Button`, `Icons`, `Logo`, `RatingBadge`, `Skeleton`, `Carousel`). Reuse them rather than restyling inline.
+- `components/home/`: home-page sections (`CuisineCarousel`, `FilterBar`).
+- Design tokens live in the `@theme` block in `index.css`: `brand-*`, `ink`, `ink-muted`, `ink-subtle`, `rating`, `veg`, `nonveg`, `rounded-card`, `shadow-card`, `shadow-header`. The header is `h-20`, so sticky elements below it use `top-20`.
 
 ### State
 
@@ -42,6 +49,6 @@ React 18 SPA bundled with Parcel (no webpack or Vite config). Babel (`babel.conf
 
 ## Tests
 
-Tests live in `src/**/__tests__/` and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `searchInput`, `foodItems`, `cartItems`); keep those attributes when editing components.
+Tests live in `src/**/__tests__/` and use React Testing Library with the `jest-fixed-jsdom` environment. They mock `global.fetch` to return `buildListResponse()` / `buildMenuResponse(id)` from `src/data/restaurants.js`, so changes to that dataset can change the expected counts. Elements are found by `data-testid` (`resCard`, `restaurantGrid`, `searchInput`, `foodItems`, `cartItems`, `cartCount`); keep those attributes when editing components.
 
 `Cart.test.js` uses the real `appStore` singleton, so cart state carries over between its tests, and they must run in order.

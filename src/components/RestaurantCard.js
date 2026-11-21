@@ -1,37 +1,54 @@
 import FoodImage from "./FoodImage";
+import RatingBadge from "./ui/RatingBadge";
 
 const RestaurantCard = ({ resData }) => {
   const {
     name,
     cuisines = [],
-    costForTwo,
+    areaName,
     avgRating,
     sla,
+    veg,
     aggregatedDiscountInfoV3: offer,
   } = resData;
 
   return (
-    <div
+    <article
       data-testid="resCard"
-      className="p-4 m-4 w-[300px] rounded-lg bg-gray-100 hover:bg-gray-300"
+      className="group w-full transition-transform duration-200 hover:scale-[0.96]"
     >
-      <FoodImage
-        label={name}
-        hints={cuisines}
-        className="relative h-44 rounded-lg"
-      />
-      <h3 className="font-bold pt-4 pb-2 text-lg">{name}</h3>
-      <h4 className="pb-2 text-md">
-        ⭐ {avgRating} • {sla?.slaString}
-      </h4>
-      <h4 className="pb-2 text-sm text-gray-600">{cuisines.join(", ")}</h4>
-      <h4 className="font-bold pb-2 text-sm">{costForTwo}</h4>
-      {offer && (
-        <h4 className="text-sm font-bold text-orange-600">
-          {offer.header} {offer.subHeader}
-        </h4>
-      )}
-    </div>
+      <div className="relative overflow-hidden rounded-card shadow-card">
+        <FoodImage
+          label={name}
+          hints={cuisines}
+          className="aspect-[4/3] w-full"
+          emojiClassName="text-7xl transition-transform duration-300 group-hover:scale-110"
+        />
+        {offer && (
+          <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent px-3 pb-2 pt-10">
+            <p className="text-lg font-extrabold uppercase tracking-tight text-white">
+              {offer.header} {offer.subHeader}
+            </p>
+          </div>
+        )}
+        {veg && (
+          <span className="absolute left-3 top-3 rounded-md bg-white/95 px-2 py-0.5 text-xs font-bold text-veg shadow-sm">
+            Pure Veg
+          </span>
+        )}
+      </div>
+
+      <div className="px-2 pt-3">
+        <h3 className="truncate text-lg font-bold text-ink">{name}</h3>
+        <p className="flex items-center gap-1.5 text-base">
+          <RatingBadge rating={avgRating} />
+          <span className="text-ink" aria-hidden="true">•</span>
+          <span className="font-bold text-ink">{sla?.slaString}</span>
+        </p>
+        <p className="truncate text-ink-muted">{cuisines.join(", ")}</p>
+        <p className="truncate text-ink-muted">{areaName}</p>
+      </div>
+    </article>
   );
 };
 
