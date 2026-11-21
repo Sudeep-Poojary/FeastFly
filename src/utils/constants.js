@@ -1,13 +1,10 @@
 export const LOGO_URL =
   "https://res.cloudinary.com/dutdah0l9/image/upload/v1720058694/Swiggy_logo_bml6he.png";
 
-export const CDN_URL =
-  "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
+// NamasteDev dummy API (Swiggy-shaped data). See README.
+export const API_BASE_URL = "https://namastedev.com/api/v1";
+export const LIST_RESTAURANTS_URL = `${API_BASE_URL}/listRestaurants`;
+export const MENU_URL = `${API_BASE_URL}/listRestaurantMenu/`;
 
-export const SWIGGY_API =
-  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.060587&lng=72.8251294&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
-
-// export const SWIGGY_CORS_API "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.060587&lng=72.8251294&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-
-export const MENU_API =
-  "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.060587&lng=72.8251294&restaurantId=";
+// Give up on the live API after this long and use the bundled dataset.
+export const API_TIMEOUT_MS = 6000;

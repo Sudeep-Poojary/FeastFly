@@ -7,26 +7,21 @@ import { useState } from "react";
 const RestaurantMenu = () => {
   const { resId } = useParams();
 
-  const resInfo = useRestaurantMenu(resId);
+  const { menu, loading, error } = useRestaurantMenu(resId);
 
   const [showIndex, setShowIndex] = useState(0);
 
-  if (resInfo === null) return <Shimmer />;
+  if (loading) return <Shimmer />;
 
-  const { name, cuisines, costForTwoMessage } =
-    resInfo?.cards[2]?.card?.card?.info;
-
-  const { itemCards } =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
-
-  const categories =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (c) =>
-        c.card?.card?.["@type"] ===
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  if (error || !menu) {
+    return (
+      <h1 className="m-8 text-center text-xl font-bold">
+        Sorry, we couldn't find this restaurant's menu.
+      </h1>
     );
+  }
 
-  // console.log(categories);
+  const { name, cuisines = [], costForTwoMessage } = menu.info;
 
   return (
     <div className="text-center">
@@ -35,12 +30,12 @@ const RestaurantMenu = () => {
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
       {/* Category Accordions */}
-      {categories.map((category, index) => (
+      {menu.categories.map((category, index) => (
         // Controlled Component
         <RestaurantCategory
-          key={category?.card?.card?.title}
-          data={category?.card?.card}
-          showItems={index === showIndex ? true : false}
+          key={category.title}
+          data={category}
+          showItems={index === showIndex}
           setShowIndex={() => setShowIndex(index)}
           setShowIndexClose={() => setShowIndex(null)}
         />

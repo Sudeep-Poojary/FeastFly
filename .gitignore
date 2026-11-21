@@ -9,3 +9,5 @@
 
 # Testing directory
 /coverage
+# Vercel
+.vercel

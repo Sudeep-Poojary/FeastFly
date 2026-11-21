@@ -1,12 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import RestaurantCard from "../RestaurantCard";
-import MOCK_DATA from "../mocks/ResCardMock.json";
 import "@testing-library/jest-dom";
+import RestaurantCard from "../RestaurantCard";
+import { RESTAURANTS } from "../../data/restaurants";
 
 it("Should render RestaurantCard component with props data", () => {
-  render(<RestaurantCard resData={MOCK_DATA} />);
+  const burgerHub = RESTAURANTS.find((r) => r.name === "Burger Hub");
 
-  const resName = screen.getByText("Burger King");
+  render(<RestaurantCard resData={burgerHub} />);
 
-  expect(resName).toBeInTheDocument();
+  expect(screen.getByText("Burger Hub")).toBeInTheDocument();
+  expect(screen.getByText("Burgers, American, Fast Food")).toBeInTheDocument();
+  expect(screen.getByText("₹125 OFF ABOVE ₹249")).toBeInTheDocument();
 });

@@ -38,10 +38,10 @@ describe("Contact Us Page Test Cases", () => {
     expect(button).toBeInTheDocument();
   });
 
-  it("Should load input name inside the coontact us component", () => {
+  it("Should load input name inside the contact us component", () => {
     render(<Contact />);
 
-    const inputName = screen.getByPlaceholderText("name");
+    const inputName = screen.getByPlaceholderText("Name");
 
     expect(inputName).toBeInTheDocument();
   });

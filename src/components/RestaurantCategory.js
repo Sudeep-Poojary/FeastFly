@@ -23,13 +23,13 @@ const RestaurantCategory = ({
           onClick={handleClick}
         >
           <span className="font-bold text-lg">
-            {data.title} ({data.itemCards.length})
+            {data.title} ({data.items.length})
           </span>
           <span className="font-bold text-lg">∨</span>
         </div>
 
         {/*Accordion Body */}
-        {showItems && <ItemList items={data.itemCards} />}
+        {showItems && <ItemList items={data.items} />}
       </div>
     </div>
   );

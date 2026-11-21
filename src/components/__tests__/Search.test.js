@@ -1,18 +1,16 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import Body from "../Body";
-import MOCK_DATA from "../mocks/mockResListData.json";
 import { BrowserRouter } from "react-router";
 import "@testing-library/jest-dom";
+import Body from "../Body";
+import { buildListResponse } from "../../data/restaurants";
 
-global.fetch = jest.fn(() => {
-  return Promise.resolve({
-    json: () => {
-      return Promise.resolve(MOCK_DATA);
-    },
-  });
+beforeEach(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({ ok: true, json: () => Promise.resolve(buildListResponse()) })
+  );
 });
 
-it("Should Search Res List for burger text input", async () => {
+const renderBody = async () => {
   await act(async () => {
     render(
       <BrowserRouter>
@@ -20,44 +18,29 @@ it("Should Search Res List for burger text input", async () => {
       </BrowserRouter>
     );
   });
+};
 
-  const cardsBeforeSearch = screen.getAllByTestId("resCard");
+it("Should search the restaurant list for 'burger'", async () => {
+  await renderBody();
 
-  expect(cardsBeforeSearch.length).toBe(8);
+  expect(screen.getAllByTestId("resCard").length).toBe(10);
 
-  const seacrhBtn = screen.getByRole("button", { name: "Search" });
+  fireEvent.change(screen.getByTestId("searchInput"), {
+    target: { value: "burger" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Search" }));
 
-  const searchInput = screen.getByTestId("searchInput");
-
-  fireEvent.change(searchInput, { target: { value: "burger" } });
-
-  fireEvent.click(seacrhBtn);
-
-  const cardsAfterSearch = screen.getAllByTestId("resCard");
-
-  expect(cardsAfterSearch.length).toBe(1);
+  expect(screen.getAllByTestId("resCard").length).toBe(1);
+  expect(screen.getByText("Burger Hub")).toBeInTheDocument();
 });
 
 it("Should filter Top Rated Restaurants", async () => {
-  await act(async () => {
-    render(
-      <BrowserRouter>
-        <Body />
-      </BrowserRouter>
-    );
-  });
+  await renderBody();
 
-  const cardsBeforeFilter = screen.getAllByTestId("resCard");
+  expect(screen.getAllByTestId("resCard").length).toBe(10);
 
-  expect(cardsBeforeFilter.length).toBe(8);
+  fireEvent.click(screen.getByRole("button", { name: "Top Rated Restaurants" }));
 
-  const topRatedBtn = screen.getByRole("button", {
-    name: "Top Rated Restaurants",
-  });
-
-  fireEvent.click(topRatedBtn);
-
-  const cardsAfterFilter = screen.getAllByTestId("resCard");
-
-  expect(cardsAfterFilter.length).toBe(4);
+  // Ratings above 4.3: 4.6, 4.5, 4.7, 4.4, 4.4
+  expect(screen.getAllByTestId("resCard").length).toBe(5);
 });

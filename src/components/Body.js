@@ -1,33 +1,18 @@
-import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { SWIGGY_API } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import useRestaurantList from "../utils/useRestaurantList";
 
 const Body = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const { restaurants, loading, error } = useRestaurantList();
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
-
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const data = await fetch(SWIGGY_API);
-    const json = await data.json();
-
-    setListOfRestaurants(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-
-    setFilteredRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-  };
+    setFilteredRestaurant(restaurants);
+  }, [restaurants]);
 
   const onlineStatus = useOnlineStatus();
 
@@ -39,9 +24,17 @@ const Body = () => {
     );
   }
 
-  return listOfRestaurants.length === 0 ? (
-    <Shimmer />
-  ) : (
+  if (loading) return <Shimmer />;
+
+  if (error) {
+    return (
+      <h1 className="m-8 text-center text-xl font-bold">
+        Couldn't load restaurants. Please try again later.
+      </h1>
+    );
+  }
+
+  return (
     <div className="body">
       <div className="filter flex justify-center">
         <div className="search m-4 p-4">
@@ -57,13 +50,11 @@ const Body = () => {
           <button
             className="px-4 py-2 mx-1 my-4 bg-green-100 rounded-lg"
             onClick={() => {
-              console.log(searchText);
-
-              const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              const filtered = restaurants.filter((res) =>
+                res.name.toLowerCase().includes(searchText.toLowerCase())
               );
 
-              setFilteredRestaurant(filteredRestaurant);
+              setFilteredRestaurant(filtered);
             }}
           >
             Search
@@ -74,8 +65,8 @@ const Body = () => {
           <button
             className="px-4 py-2 m-4 bg-gray-100 rounded-lg"
             onClick={() => {
-              const filteredList = listOfRestaurants.filter(
-                (res) => res.info.avgRating > 4.3
+              const filteredList = restaurants.filter(
+                (res) => res.avgRating > 4.3
               );
               setFilteredRestaurant(filteredList);
             }}
@@ -87,15 +78,8 @@ const Body = () => {
 
       <div className="flex flex-wrap justify-evenly">
         {filteredRestaurant.map((restaurant) => (
-          <Link
-            key={restaurant?.info.id}
-            to={"/restaurants/" + restaurant?.info.id}
-          >
-            {restaurant?.info.isOpen ? (
-              <RestaurantCardPromoted resData={restaurant?.info} />
-            ) : (
-              <RestaurantCard resData={restaurant?.info} />
-            )}
+          <Link key={restaurant.id} to={"/restaurants/" + restaurant.id}>
+            <RestaurantCard resData={restaurant} />
           </Link>
         ))}
       </div>
